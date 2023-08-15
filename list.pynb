@@ -1,0 +1,106 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMRA9jqZTiuzLQ/ccQjoIvg",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/faizulhz/ProgrammingAssignment2/blob/master/list.pynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 9,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "j_a0h8-96Adb",
+        "outputId": "5ca54b22-6998-48cc-e10b-391f01005355"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "oll'eh \n",
+            "o\n",
+            "l\n",
+            "l\n",
+            "'\n",
+            "e\n",
+            "h\n",
+            " \n",
+            "yes\n",
+            "hello\n",
+            "HELLO\n",
+            "hello\n",
+            " hello\n",
+            " hello\n",
+            "hello hello\n"
+          ]
+        }
+      ],
+      "source": [
+        "from ctypes import string_at\n",
+        "import string\n",
+        "#strings immutable langchain ordered\n",
+        "a=' he\\'llo'\n",
+        "b=\"\"\"hello\"\"\"\n",
+        "c=\"    hello     \"\n",
+        "d=a[0] #cann't assing immutable\n",
+        "f=a[::-1]\n",
+        "print(f)\n",
+        "for i in f:\n",
+        "   print(i)\n",
+        "if 'h' in f:\n",
+        "  print('yes')\n",
+        "c=c.strip()\n",
+        "print(c)\n",
+        "c=c.upper()\n",
+        "print(c)\n",
+        "c=c.lower()\n",
+        "print(c)\n",
+        "\n",
+        "#startswith endswith True false\n",
+        "#find\n",
+        "#count\n",
+        "#replace\n",
+        "# split() space defualty return list\n",
+        "# split(',')\n",
+        "#' '.join(mulist)\n",
+        "\n",
+        "\n",
+        "#format string $, format f-string_at\n",
+        "var=\"hello\"\n",
+        "a= \" %s\"%var\n",
+        "print(a)\n",
+        "b= \" {}\".format(var)\n",
+        "print(b)\n",
+        "v= f\"hello {var}\"\n",
+        "\n",
+        "print(v)\n",
+        "\n",
+        "\n"
+      ]
+    }
+  ]
+}
