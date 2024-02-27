@@ -1,0 +1,104 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNTTXgznNvuD6SceFa+e/n/",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/faizulhz/ProgrammingAssignment2/blob/master/bfsdfsipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "IWncdUiIy2lt"
+      },
+      "outputs": [],
+      "source": [
+        "from collections import deque\n",
+        "\n",
+        "def bfs(graph, start):\n",
+        "  \"\"\"\n",
+        "  Performs Breadth First Search on a graph.\n",
+        "\n",
+        "  Args:\n",
+        "      graph: A dictionary representing the graph, where keys are nodes and values are lists of neighbors.\n",
+        "      start: The starting node for the BFS traversal.\n",
+        "\n",
+        "  Returns:\n",
+        "      A list of nodes visited in BFS order.\n",
+        "  \"\"\"\n",
+        "  visited = set()  # Keep track of visited nodes\n",
+        "  queue = deque([start])  # Queue for BFS traversal\n",
+        "\n",
+        "  while queue:\n",
+        "    node = queue.popleft()\n",
+        "    visited.add(node)\n",
+        "    for neighbor in graph[node]:\n",
+        "      if neighbor not in visited:\n",
+        "        queue.append(neighbor)\n",
+        "\n",
+        "  return visited\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [],
+      "metadata": {
+        "id": "9hXf9ODGzS-o"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def dfs(graph, start, visited=None):\n",
+        "  \"\"\"\n",
+        "  Performs Depth First Search on a graph (recursive implementation).\n",
+        "\n",
+        "  Args:\n",
+        "      graph: A dictionary representing the graph, where keys are nodes and values are lists of neighbors.\n",
+        "      start: The starting node for the DFS traversal.\n",
+        "      visited: An optional set to keep track of visited nodes (used internally for recursion).\n",
+        "\n",
+        "  Returns:\n",
+        "      None\n",
+        "  \"\"\"\n",
+        "  if visited is None:\n",
+        "    visited = set()  # Initialize visited set if not provided\n",
+        "\n",
+        "  visited.add(start)\n",
+        "  for neighbor in graph[start]:\n",
+        "    if neighbor not in visited:\n",
+        "      dfs(graph, neighbor, visited)  # Recursive call for unvisited neighbors\n",
+        "\n",
+        "# Example usage:\n",
+        "graph = {'A': ['B', 'C'], 'B': ['D', 'E'], 'C': ['F'], 'D': [], 'E': [], 'F': []}\n",
+        "dfs(graph, 'A')\n"
+      ],
+      "metadata": {
+        "id": "-psaA7ldzTYi"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
