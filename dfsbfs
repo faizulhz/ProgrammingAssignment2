@@ -1,0 +1,261 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMIl8+797ChlPS1UZiwwhCO",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/faizulhz/ProgrammingAssignment2/blob/master/dfsbfs\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 16,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "HZnVgyZW3JjO",
+        "outputId": "4766bbdb-744b-4fc5-e418-3a37a5866355"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "{'G', 'A', 'B', 'C', 'E', 'F', 'D'}\n"
+          ]
+        }
+      ],
+      "source": [
+        "from collections import deque\n",
+        "\n",
+        "def graphsearch(graph,start,goal,strategy):\n",
+        "\n",
+        "    if(strategy=='LIFO'):\n",
+        "          stack = [start]\n",
+        "          visited = set()\n",
+        "          path = []  # Keep track of the path as we explore\n",
+        "\n",
+        "          while stack:\n",
+        "              current = stack.pop()\n",
+        "              visited.add(current)\n",
+        "              path.append(current)\n",
+        "\n",
+        "              if current == goal:\n",
+        "                return path  # Found the goal, return the path\n",
+        "\n",
+        "              for neighbor in graph[current]:\n",
+        "                if neighbor not in visited:\n",
+        "                    stack.append(neighbor)\n",
+        "          return None\n",
+        "    elif(strategy=='FIFO'):\n",
+        "          queue = deque([start])\n",
+        "          visited = set()\n",
+        "          parent = {}  # Optional: store parent information for path reconstruction\n",
+        "          toreturn=[]\n",
+        "          while queue:\n",
+        "              current_node = queue.popleft()\n",
+        "              visited.add(current_node)\n",
+        "\n",
+        "              if goal==current_node:\n",
+        "                return  visited\n",
+        "\n",
+        "              for neighbor in graph[current_node]:\n",
+        "                if neighbor not in visited:\n",
+        "                   queue.append(neighbor)\n",
+        "                   parent[neighbor] = current_node\n",
+        "                   toreturn.append(current_node)\n",
+        "\n",
+        "          return  visited\n",
+        "\n",
+        "graph = {\n",
+        "  \"A\": [\"B\", \"C\"],\n",
+        "  \"B\": [\"D\", \"E\"],\n",
+        "  \"C\": [\"F\"],\n",
+        "  \"D\": [],\n",
+        "  \"E\": [\"F\"],\n",
+        "  \"F\": [\"G\"],\n",
+        "  \"G\": []\n",
+        "}\n",
+        "print(graphsearch(graph,\"A\",'G','FIFO'))"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def bfs_with_goal(graph, start, is_goal):\n",
+        "  \"\"\"\n",
+        "  Performs Breadth-First Search on a graph to find a node satisfying the goal criteria.\n",
+        "\n",
+        "  Args:\n",
+        "      graph: A dictionary representing the graph, where keys are nodes and values are lists of neighbors.\n",
+        "      start: The starting node for the search.\n",
+        "      is_goal: A function that takes a node as input and returns True if it satisfies the goal criteria.\n",
+        "\n",
+        "  Returns:\n",
+        "      A tuple containing:\n",
+        "          - The goal node (or None if not found)\n",
+        "          - A dictionary mapping nodes to their parent nodes in the search path (optional)\n",
+        "  \"\"\"\n",
+        "  queue = deque([start])\n",
+        "  visited = set()\n",
+        "  parent = {}  # Optional: store parent information for path reconstruction\n",
+        "\n",
+        "  while queue:\n",
+        "    current_node = queue.popleft()\n",
+        "    visited.add(current_node)\n",
+        "\n",
+        "    if is_goal(current_node):\n",
+        "      return current_node, parent\n",
+        "\n",
+        "    for neighbor in graph[current_node]:\n",
+        "      if neighbor not in visited:\n",
+        "        queue.append(neighbor)\n",
+        "        parent[neighbor] = current_node\n",
+        "\n",
+        "  return None, parent\n",
+        "\n",
+        "# Example usage\n",
+        "graph = {\n",
+        "  \"A\": [\"B\", \"C\"],\n",
+        "  \"B\": [\"D\", \"E\"],\n",
+        "  \"C\": [\"F\"],\n",
+        "  \"D\": [],\n",
+        "  \"E\": [\"F\"],\n",
+        "  \"F\": [\"G\"],\n",
+        "  \"G\": []\n",
+        "}\n",
+        "\n",
+        "def is_goal(node):\n",
+        "  return node == \"G\"\n",
+        "\n",
+        "goal_node, path = bfs_with_goal(graph, \"A\", is_goal)\n",
+        "\n",
+        "if goal_node:\n",
+        "  print(\"Goal found:\", goal_node)\n",
+        "  # If you stored parent information in the search:\n",
+        "  # reconstruct_path(path, start, goal_node)\n",
+        "else:\n",
+        "  print(\"Goal not found within reachable nodes\")\n",
+        "print(path)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "mkNDkT1x9F6U",
+        "outputId": "20381f49-7660-4fd2-ae67-dc09eb4c463c"
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Goal found: G\n",
+            "{'B': 'A', 'C': 'A', 'D': 'B', 'E': 'B', 'F': 'E', 'G': 'F'}\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [],
+      "metadata": {
+        "id": "t8Oub9X23PDV"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def dfs(graph, start, goal):\n",
+        "    \"\"\"\n",
+        "    Performs DFS on a graph to find the goal state from the starting state.\n",
+        "\n",
+        "    Args:\n",
+        "        graph: A dictionary representing the graph, where keys are nodes and values are lists of adjacent nodes.\n",
+        "        start: The starting node for the search.\n",
+        "        goal: The goal state to find.\n",
+        "\n",
+        "    Returns:\n",
+        "        A list representing the path from start to goal, or None if the goal is not found.\n",
+        "    \"\"\"\n",
+        "\n",
+        "    stack = [start]\n",
+        "    visited = set()\n",
+        "    path = []  # Keep track of the path as we explore\n",
+        "\n",
+        "    while stack:\n",
+        "        current = stack.pop()\n",
+        "        visited.add(current)\n",
+        "        path.append(current)\n",
+        "\n",
+        "        if current == goal:\n",
+        "            return path  # Found the goal, return the path\n",
+        "\n",
+        "        for neighbor in graph[current]:\n",
+        "#            if neighbor not in visited:\n",
+        "                stack.append(neighbor)\n",
+        "\n",
+        "    return None  # Goal not found\n",
+        "\n",
+        "# Example usage:\n",
+        "graph = {\n",
+        "    \"A\": [\"B\", \"C\"],\n",
+        "    \"B\": [\"D\", \"E\"],\n",
+        "    \"C\": [\"F\"],\n",
+        "    \"D\": [],\n",
+        "    \"E\": [\"F\"],\n",
+        "    \"F\": [\"G\"],\n",
+        "    \"G\": []\n",
+        "}\n",
+        "\n",
+        "start = \"A\"\n",
+        "goal = \"D\"\n",
+        "\n",
+        "path = dfs(graph, start, goal)\n",
+        "\n",
+        "if path:\n",
+        "    print(\"Path from\", start, \"to\", goal, \":\", path)\n",
+        "else:\n",
+        "    print(\"Goal not found\")\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "_Zu9484b3Pa9",
+        "outputId": "5486a46c-9e45-4cba-aacd-34e329c59949"
+      },
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Path from A to D : ['A', 'C', 'F', 'G', 'B', 'E', 'F', 'G', 'D']\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
